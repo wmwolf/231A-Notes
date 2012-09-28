@@ -1,0 +1,120 @@
+\documentclass[10pt]{article}
+
+%%%%%%%%%%%%%%%%%%%%%
+% Package Inclusion %
+%%%%%%%%%%%%%%%%%%%%%
+\usepackage{geometry,amsmath,amsthm,mathrsfs,amssymb,graphicx,bm,hyperref,url}
+
+%%%%%%%%%%%%%%%%%%%
+% Custom Commands %
+%%%%%%%%%%%%%%%%%%%
+\newcommand{\n}{\noindent}
+\newcommand{\norm}[1]{\left|#1\right|}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title Page Information %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Notes for PHYS 231A: General Relativity}
+\author{Bill Wolf}
+\date{\today}
+
+\begin{document}
+
+\vfill\maketitle\vfill \newpage
+
+\tableofcontents \newpage
+
+%%%%%%%%%%%%%%%%%%%%%%
+% September 23, 2011 %
+%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+	\emph{September 28, 2012}
+	\subsection{What We'll Cover} % (fold)
+	\label{sub:what_we_ll_cover}
+		\begin{enumerate}
+			\item Special Relativity
+			\item Differential Geometry
+			\item How matter reacts through spacetime
+			\begin{enumerate}
+				\item Action for particles
+				\item Action for fields
+				\item Stress Tensors
+			\end{enumerate}
+			\item Geometrodynamics
+			\begin{enumerate}
+				\item Cosmology
+				\item Schwarzchild
+				\item Stars in hydrostatic equilibrium
+			\end{enumerate}
+		\end{enumerate}
+	% subsection what_we_ll_cover (end)		
+	\subsection{Misconceptions about GR} % (fold)
+	\label{sub:misconceptions_about_gr}
+		\subsubsection{GR is Hard} % (fold)
+		\label{ssub:gr_is_hard}
+		This is a product of people being unable to do calculus on curved manifolds. The underlying theory is very simple and elegant. The details, when they get hairy, can be relegated to a computer. The equations of motion are easy to recover, but exact solutions can be difficult.
+		% subsubsection gr_is_hard (end)
+		\subsubsection{SR only describes inertial motion} % (fold)
+		\label{ssub:sr_only_describes_inertial_motion}
+		This is simply not true. Generalizations of Newtonian Mechanics can easily account for accelerated motion. This probably comes from the twin paradox, where an accelerated observer experiences a different proper time than his twin, but this does not mean that SR is unable to handle accelerated motion. It cannot handle motion on a curved metric, though.
+		% subsubsection sr_only_describes_inertial_motion (end)
+		\subsubsection{GR is based on a principle of general covariance} % (fold)
+		\label{ssub:gr_is_based_on_a_principle_of_general_covariance}
+		General covariance is more general than general relativity. In fact, all theoretical physics should be done in a generally covariant way so that a change of coordinates should not affect the theory.
+		% subsubsection gr_is_based_on_a_principle_of_general_covariance (end)
+	% subsection misconceptions_about_gr (end)
+	\subsection{GR is based on the Equivalence Principle} % (fold)
+	\label{sub:gr_is_based_on_the_equivalence_principle}
+	The \textbf{equivalence principle} states essentially that an observer undergoing acceleration is completely equivalent to a different observer that is ``at rest'' in a gravitational field. For example, a scientist conducting experiments in an accelerating rocket (with acceleration $g$) will measure the same results as another scientist on Earth at rest, but experiencing a gravitational acceleration of $g$.\\
+	
+	\n An interesting conclusion of this principle is that of the curved paths of light. For instance, in the rocket scenario mentioned above, if a ray of light enters the rocket perpendicular to the rocket's acceleration, the light would appear to curve in a parabolic shape solely due to the relative motion of the rocket. Thus, we expect light traveling through a gravitational field to likewise be curved in the direction of the field. This can be observed by the shifting of apparent positions of stars near the sun during a solar eclipse.\\
+	
+	\n Additionally, if light were traveling along the direction of motion of the rocket, observers outside (``at rest'') and inside would observe different wavelengths of the light. We would then expect a similar result in a gravitational field. In the rocket scenario, this is called the Doppler Shift, but in a gravitational field, we call it the \textbf{gravitational redshift}.\\
+	
+	\n This bending of light rays leads us to conclude that ``spacetime is curved'', in the sense that two parallel light rays may intersect (e.g. two parallel light rays travel on either side of a massive body and are curved into each other). This leads to an entirely geometric understanding of spacetime. Note that it is space\emph{time} that is curved. GR must be consistent with SR, so both space \emph{and time} must be curved under the influence of mass.                                                                                                                             Indeed, GR wraps space and time together into one entity, whereas Newtonian physics kept the two completely separate.
+	% subsection gr_is_based_on_the_equivalence_principle (end)
+	\subsection{Inertial frames} % (fold)
+	\label{sub:inertial_frames}
+	We need not invoke SR of GR to talk of inertial frames. In fact, the idea was originally due to Galileo, using the space-time of Newton. In this paradigm, time is absolute, and is experienced the same everywhere, regardless of their motion. There was such a thing as synchronized clocks, and we could conceive of a variable $t$, which tells the time for all observers. Additionally, we are dealing with three dimensions in completely flat space. Considering two positions, $\mathbf{x}$ and $\mathbf{x}'$, the distance between the two points would be
+	\begin{equation}
+		\label{eq:1} \delta s^2=\left[x^1-(x^1)'\right]^2 + \left[x^2-(x^2)'\right]^2 + \left[x^3-(x^3)'\right]^2 = (\mathbf{x}-\mathbf{x}')^2
+	\end{equation}
+	In inertial frames, where relative motions differ only by constant velocities, each of these coordinates necessarily has a vanishing second time derivative:
+	\begin{equation}
+		\label{eq:2} \ddot{x}^i=0
+	\end{equation}
+	We'll now change coordinates in such a way to preserve the structure of \eqref{eq:1}, which is called an \textbf{isometry} (since it preserves distance). 
+	\begin{equation}
+		\label{eq:3} \tilde{x}^i(t) = \sum_j R^i_{\ j}(t)x^j(t) + g^i(t)
+	\end{equation}
+	This transformation gives a time dependent rotation and translation of each coordinate. We need only require that \eqref{eq:2} be true in this new coordinate system as well to come up with some reasonable constraints.
+	\begin{equation}
+		\label{eq:4} \ddot{\tilde{x}}^i(t) = \ddot{g}^i(t)+\sum_j\left[\ddot{R}^i_{\ j}x^j(t) + 2\dot{R}^i_{\ j}\dot{x}^j+R^i_{\ j}(t)\ddot{x}^j(t)\right]=0
+	\end{equation}
+	\eqref{eq:2} mandates that the last term in \eqref{eq:4} must vanish. Moreover, this equation must be true for all particles at all locations at all velocities. A particle not moving ($\dot{x}^i=0$) at the origin ($x^i=0$) requires that
+	\begin{equation}
+		\label{eq:5} \ddot{g}^i(t)=0
+	\end{equation}
+	So the coordinate system as a whole is only moving at constant velocity. Similarly, only requiring the particle to be at rest now mandates that
+	\begin{equation}
+		\label{eq:6} \ddot{R}^i_{\ j}(t)=0
+	\end{equation}
+	which necessitates that the last term must also vanish:
+	\begin{equation}
+		\label{eq:7} \dot{R}^i_{\ j}(t)=0
+	\end{equation}
+	So, the set of all \textbf{Galilean transformations} are those with a constant rotation and a constant relative velocity.
+	% subsection inertial_frames (end)
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+\end{document}
